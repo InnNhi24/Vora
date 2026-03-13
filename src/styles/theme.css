@@ -1,0 +1,96 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #F7F5F2;
+  --foreground: #3C3A36;
+  --card: #FAF9F6;
+  --card-foreground: #3C3A36;
+  --popover: #FAF9F6;
+  --popover-foreground: #3C3A36;
+  --primary: #8C7851;
+  --primary-foreground: #ffffff;
+  --secondary: #E5E2DD;
+  --secondary-foreground: #3C3A36;
+  --muted: #E5E2DD;
+  --muted-foreground: #6B6862;
+  --accent: #D6CFC7;
+  --accent-foreground: #3C3A36;
+  --destructive: #A0522D;
+  --destructive-foreground: #FAF9F6;
+  --border: #E5E2DD;
+  --input: #E5E2DD;
+  --input-background: #FAF9F6;
+  --switch-background: #D6CFC7;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #8C7851;
+  --chart-1: #8C7851;
+  --chart-2: #7A6845;
+  --chart-3: #6B6862;
+  --chart-4: #5F5D50;
+  --chart-5: #D6CFC7;
+  --radius: 0.75rem;
+  --sidebar: #FAF9F6;
+  --sidebar-foreground: #3C3A36;
+  --sidebar-primary: #8C7851;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #E5E2DD;
+  --sidebar-accent-foreground: #3C3A36;
+  --sidebar-border: #E5E2DD;
+  --sidebar-ring: #8C7851;
+}
+
+.dark {
+  --background: #F7F5F2;
+  --foreground: #3C3A36;
+  --card: #FAF9F6;
+  --card-foreground: #3C3A36;
+  --popover: #FAF9F6;
+  --popover-foreground: #3C3A36;
+  --primary: #8C7851;
+  --primary-foreground: #ffffff;
+  --secondary: #E5E2DD;
+  --secondary-foreground: #3C3A36;
+  --muted: #E5E2DD;
+  --muted-foreground: #6B6862;
+  --accent: #D6CFC7;
+  --accent-foreground: #3C3A36;
+  --destructive: #A0522D;
+  --destructive-foreground: #FAF9F6;
+  --border: #E5E2DD;
+  --input: #E5E2DD;
+  --ring: #8C7851;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #8C7851;
+  --chart-2: #7A6845;
+  --chart-3: #6B6862;
+  --chart-4: #5F5D50;
+  --chart-5: #D6CFC7;
+  --sidebar: #FAF9F6;
+  --sidebar-foreground: #3C3A36;
+  --sidebar-primary: #8C7851;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #E5E2DD;
+  --sidebar-accent-foreground: #3C3A36;
+  --sidebar-border: #E5E2DD;
+  --sidebar-ring: #8C7851;
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
