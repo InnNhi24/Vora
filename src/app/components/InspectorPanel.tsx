@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import { RefinementAttempt } from '../types/dialogue';
 import { X, CheckCircle2, XCircle, Code, Layers, Gauge } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ScrollArea } from './ui/scroll-area';
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
 
@@ -40,18 +39,18 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
           />
 
-          {/* Slide-over Panel */}
+          {/* Modal Box with Rounded Corners */}
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-2xl bg-zinc-900 border-l border-zinc-800 shadow-2xl z-50 flex flex-col"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="fixed inset-4 md:inset-8 lg:inset-16 bg-zinc-900 rounded-2xl border border-zinc-800 shadow-2xl z-50 flex flex-col max-w-4xl mx-auto"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 rounded-t-2xl">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
                   <Code className="w-5 h-5 text-indigo-400" />
                 </div>
                 <div>
@@ -61,15 +60,16 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
               </div>
               <button
                 onClick={onClose}
-                className="w-8 h-8 rounded-lg hover:bg-zinc-800 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-100"
+                className="w-8 h-8 rounded-xl hover:bg-zinc-800 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-100"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Content */}
-            <ScrollArea className="flex-1">
-              <div className="p-6 space-y-6">
+            <div className="flex-1 overflow-hidden">
+              <div className="h-full overflow-y-auto">
+                <div className="p-6 space-y-6">
                 {attempts.length === 0 ? (
                   <div className="text-center py-12">
                     <Code className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
@@ -88,7 +88,7 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                           <button
                             key={idx}
                             onClick={() => setSelectedAttempt(idx)}
-                            className={`flex-1 p-3 rounded-lg border transition-all ${
+                            className={`flex-1 p-3 rounded-xl border transition-all ${
                               selectedAttempt === idx
                                 ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-300'
                                 : 'bg-zinc-800/50 border-zinc-700/50 text-zinc-400 hover:border-zinc-600'
@@ -121,20 +121,20 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                             Evaluation Score
                           </div>
                           <div className="grid grid-cols-3 gap-3">
-                            <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700/50">
+                            <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700/50">
                               <div className="text-2xl font-bold text-zinc-100 mb-1">
                                 {currentAttempt.validation.errors.length === 0 ? '100' : 
                                  currentAttempt.validation.errors.length === 1 ? '66' : '33'}
                               </div>
                               <div className="text-xs text-zinc-500">Quality Score</div>
                             </div>
-                            <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700/50">
+                            <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700/50">
                               <div className="text-2xl font-bold text-zinc-100 mb-1">
                                 {currentAttempt.validation.errors.length}
                               </div>
                               <div className="text-xs text-zinc-500">Errors Found</div>
                             </div>
-                            <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700/50">
+                            <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700/50">
                               <div className="text-2xl font-bold text-zinc-100 mb-1">
                                 {currentAttempt.attemptNumber}
                               </div>
@@ -161,7 +161,7 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                               {currentAttempt.validation.errors.map((error, idx) => (
                                 <div
                                   key={idx}
-                                  className="bg-red-950/30 border border-red-900/50 rounded-lg p-3"
+                                  className="bg-red-950/30 border border-red-900/50 rounded-xl p-3"
                                 >
                                   <div className="flex items-start gap-2">
                                     <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
@@ -171,7 +171,7 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                               ))}
                             </div>
                           ) : (
-                            <div className="bg-green-950/30 border border-green-900/50 rounded-lg p-3">
+                            <div className="bg-green-950/30 border border-green-900/50 rounded-xl p-3">
                               <div className="flex items-center gap-2">
                                 <CheckCircle2 className="w-4 h-4 text-green-400" />
                                 <p className="text-xs text-green-300">All validation criteria met</p>
@@ -187,7 +187,7 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                           <div className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
                             JSON Payload
                           </div>
-                          <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 overflow-x-auto">
+                          <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-4 overflow-x-auto">
                             <pre className="text-xs text-zinc-300 font-mono">
                               {currentAttempt.parsedDialogue 
                                 ? JSON.stringify(currentAttempt.parsedDialogue, null, 2)
@@ -203,7 +203,7 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                           <div className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
                             Prompt Sent to LLM
                           </div>
-                          <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4">
+                          <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-4">
                             <pre className="text-xs text-zinc-400 font-mono whitespace-pre-wrap">
                               {currentAttempt.prompt}
                             </pre>
@@ -214,11 +214,12 @@ export function InspectorPanel({ isOpen, onClose, attempts }: InspectorPanelProp
                   </>
                 )}
               </div>
-            </ScrollArea>
+            </div>
+            </div>
 
             {/* Footer Stats */}
             {attempts.length > 0 && (
-              <div className="border-t border-zinc-800 px-6 py-4 bg-zinc-900/50">
+              <div className="border-t border-zinc-800 px-6 py-4 bg-zinc-900/50 rounded-b-2xl">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-zinc-500">
                     Total Iterations: <span className="text-zinc-300 font-medium">{attempts.length}</span>
