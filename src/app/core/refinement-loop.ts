@@ -28,6 +28,13 @@ export async function generateDialogueWithRefinement(
   onProgress?: (attempt: RefinementAttempt) => void
 ): Promise<RefinementLog> {
   
+  // Get API key from environment if not provided
+  const effectiveApiKey = apiKey || import.meta.env.VITE_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+  
+  if (!effectiveApiKey) {
+    throw new Error('OpenAI API key not found. Please set OPENAI_API_KEY environment variable.');
+  }
+  
   // Initialize refinement log
   const log: RefinementLog = {
     scenario,
@@ -52,7 +59,7 @@ export async function generateDialogueWithRefinement(
     // STEP 2: Call LLM API
     let rawResponse: string;
     try {
-      rawResponse = await callLLMAPI(prompt, apiKey, provider);
+      rawResponse = await callLLMAPI(prompt, effectiveApiKey, provider);
       console.log('Response received:', rawResponse.substring(0, 200) + '...');
     } catch (error) {
       // Handle API errors

@@ -18,9 +18,7 @@ function App() {
   const [refinementLog, setRefinementLog] = useState<RefinementLogType | null>(null);
 
   const handleSynthesize = async (
-    scenario: string,
-    apiKey: string,
-    provider: 'openai'
+    scenario: string
   ) => {
     setCurrentStep('output');
     setRefinementLog({
@@ -33,8 +31,8 @@ function App() {
     try {
       const log = await generateDialogueWithRefinement(
         scenario,
-        apiKey,
-        provider,
+        '', // API key will be from environment variables
+        'openai',
         (attempt: RefinementAttempt) => {
           setRefinementLog(prev => {
             if (!prev) {

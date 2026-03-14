@@ -4,21 +4,16 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ChevronLeft, Settings2, Sparkles } from 'lucide-react';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
+import { ChevronLeft, Sparkles } from 'lucide-react';
 import { VoraLogo } from '../components/VoraLogo';
 
 interface InputStudioPageProps {
-  onSynthesize: (scenario: string, apiKey: string, provider: 'openai') => void;
+  onSynthesize: (scenario: string) => void;
   onBack: () => void;
 }
 
 export function InputStudioPage({ onSynthesize, onBack }: InputStudioPageProps) {
   const [scenario, setScenario] = useState('');
-  const [apiKey, setApiKey] = useState('');
-  const [provider] = useState<'openai'>('openai');
-  const [showSettings, setShowSettings] = useState(false);
   const [charCount, setCharCount] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -39,13 +34,8 @@ export function InputStudioPage({ onSynthesize, onBack }: InputStudioPageProps) 
     if (!scenario.trim()) {
       return;
     }
-    
-    if (!apiKey.trim()) {
-      setShowSettings(true);
-      return;
-    }
 
-    onSynthesize(scenario, apiKey, provider);
+    onSynthesize(scenario);
   };
 
   const quickScenarios = [
@@ -102,49 +92,6 @@ export function InputStudioPage({ onSynthesize, onBack }: InputStudioPageProps) 
               Paint the scene, and we'll bring it to life
             </p>
           </div>
-
-          {/* Settings Panel */}
-          {showSettings && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="mb-6 overflow-hidden"
-            >
-              <div className="bg-white border border-[#E5E2DD] rounded-xl md:rounded-2xl p-4 md:p-6">
-                <div className="flex items-center justify-between mb-4 md:mb-6">
-                  <h3 className="text-base md:text-lg font-semibold text-[#3C3A36] flex items-center gap-2">
-                    <Settings2 className="w-5 h-5 text-[#8C7851]" />
-                    Engine Configuration
-                  </h3>
-                  <button
-                    onClick={() => setShowSettings(false)}
-                    className="text-sm text-[#6B6862] hover:text-[#3C3A36]"
-                  >
-                    Hide
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="apiKey" className="text-[#3C3A36] text-sm">OpenAI API Key</Label>
-                    <Input
-                      id="apiKey"
-                      type="password"
-                      placeholder="sk-..."
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      className="bg-[#F7F5F2] border-[#E5E2DD] text-[#3C3A36] placeholder:text-[#6B6862]"
-                    />
-                  </div>
-                </div>
-
-                <p className="text-xs text-[#6B6862] mt-4">
-                  Your API key is processed locally and never stored. Using OpenAI GPT-4.
-                </p>
-              </div>
-            </motion.div>
-          )}
 
           {/* Main Input Area - Auto-expanding */}
           <motion.div
@@ -211,16 +158,8 @@ export function InputStudioPage({ onSynthesize, onBack }: InputStudioPageProps) 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3"
+            className="flex justify-center"
           >
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#F7F5F2] hover:bg-[#E5E2DD] border border-[#E5E2DD] text-[#3C3A36] transition-all"
-            >
-              <Settings2 className="w-4 h-4" />
-              <span className="text-sm md:text-base">{showSettings ? 'Hide' : 'Configure'} Engine</span>
-            </button>
-
             <button
               onClick={handleSubmit}
               disabled={!scenario.trim()}
