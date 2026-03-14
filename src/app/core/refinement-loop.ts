@@ -29,7 +29,9 @@ export async function generateDialogueWithRefinement(
 ): Promise<RefinementLog> {
   
   // Get API key from environment if not provided
-  const effectiveApiKey = apiKey || import.meta.env.VITE_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+  const effectiveApiKey = apiKey || 
+    (typeof window !== 'undefined' ? (import.meta as any).env?.VITE_OPENAI_API_KEY : undefined) ||
+    (typeof globalThis !== 'undefined' && (globalThis as any).process?.env?.OPENAI_API_KEY);
   
   if (!effectiveApiKey) {
     throw new Error('OpenAI API key not found. Please set OPENAI_API_KEY environment variable.');
@@ -222,7 +224,7 @@ ${errorSummary}
 async function callLLMAPI(
   prompt: string,
   apiKey: string,
-  provider: 'openai'
+  _provider: 'openai'
 ): Promise<string> {
   
   return await callOpenAI(prompt, apiKey);
